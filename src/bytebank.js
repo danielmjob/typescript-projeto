@@ -1,21 +1,22 @@
-let saldo = 3000;
-const elementoSaldo = document.querySelector(".saldo-valor .valor");
+var saldo = 3000;
+alert("Testando compilação do TS");
+var elementoSaldo = document.querySelector(".saldo-valor .valor");
 if (elementoSaldo != null) {
     elementoSaldo.textContent = saldo.toString();
 }
-const elementoFormulario = document.querySelector(".block-nova-transacao form");
+var elementoFormulario = document.querySelector(".block-nova-transacao form");
 elementoFormulario.addEventListener("submit", function (event) {
     event.preventDefault();
     if (!elementoFormulario.checkValidity()) {
         alert("Por favor, preencha todos os campos da transação!");
         return;
     }
-    const inputTipoTransacao = elementoFormulario.querySelector("#tipoTransacao");
-    const inputValor = elementoFormulario.querySelector("#valor");
-    const inputData = elementoFormulario.querySelector("#data");
-    let tipoTransacao = inputTipoTransacao.value;
-    let valor = inputValor.valueAsNumber;
-    let data = new Date(inputData.value);
+    var inputTipoTransacao = elementoFormulario.querySelector("#tipoTransacao");
+    var inputValor = elementoFormulario.querySelector("#valor");
+    var inputData = elementoFormulario.querySelector("#data");
+    var tipoTransacao = inputTipoTransacao.value;
+    var valor = inputValor.valueAsNumber;
+    var data = new Date(inputData.value);
     if (tipoTransacao == "Depósito") {
         saldo += valor;
     }
@@ -28,7 +29,7 @@ elementoFormulario.addEventListener("submit", function (event) {
         return;
     }
     elementoSaldo.textContent = saldo.toString();
-    const novaTransacao = {
+    var novaTransacao = {
         tipoTransacao: tipoTransacao,
         valor: valor,
         data: data,
@@ -37,4 +38,4 @@ elementoFormulario.addEventListener("submit", function (event) {
     elementoFormulario.reset();
 });
 // sempre ao alterar o codigo em ts necessário recompilar comando: tsc bytebank.ts
-// ATUALIZAÇÃO >> após criação do tsconfig.json necessário apenas usar o comando: tsc -w assim ele irá criar de forma automatica
+// atualizado após criação do tsconfig.json necessário apenas usar o comando: tsc -w assim ele irá criar de forma automatica

@@ -58,3 +58,4 @@ elementoFormulario.addEventListener("submit", function (event) {
 });
 
 // sempre ao alterar o codigo em ts necessário recompilar comando: tsc bytebank.ts
+// ATUALIZAÇÃO >> após criação do tsconfig.json necessário apenas usar o comando: tsc -w assim ele irá criar de forma automatica
