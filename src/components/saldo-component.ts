@@ -12,10 +12,6 @@ const elementoDataAcesso = document.querySelector(
   ".block-saldo time"
 ) as HTMLElement;
 
-if (elementoSaldo != null) {
-  elementoSaldo.textContent = formartarMoeda(saldo);
-}
-
 if (elementoDataAcesso != null) {
   const dataAcesso: Date = new Date();
   elementoDataAcesso.textContent = formatarData(
@@ -24,9 +20,17 @@ if (elementoDataAcesso != null) {
   );
 }
 
-const elementoFormulario = document.querySelector(
-  ".block-nova-transacao form"
-) as HTMLFormElement;
 
-// sempre ao alterar o codigo em ts necessário recompilar comando: tsc bytebank.ts
-// ATUALIZAÇÃO >> após criação do tsconfig.json necessário apenas usar o comando: tsc -w assim ele irá criar de forma automatica
+
+export function getSaldo(): number {
+  return saldo;
+}
+
+atualizarSaldo(saldo);
+
+export function atualizarSaldo(novoSaldo: number): void {
+  saldo = novoSaldo;
+  if (elementoSaldo != null) {
+    elementoSaldo.textContent = formartarMoeda(saldo);
+  }
+}
