@@ -1,5 +1,5 @@
 import { TipoTransacao } from "./TipoTransacao.js";
-let saldo = 3000;
+let saldo = JSON.parse(localStorage.getItem("saldo")) || 0; // PEGA O SALDO DO LOCAL STORAGE SE NÃO HOUVER SALDO ELE INICIA COM 0
 const transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
     if (key === "data") {
         return new Date(value);
@@ -14,12 +14,14 @@ function debitar(valor) {
         throw new Error("Saldo insuficiente!");
     }
     saldo -= valor;
+    localStorage.setItem("saldo", saldo.toString()); // altera o dado no local storage
 }
 function depositar(valor) {
     if (valor <= 0) {
         throw new Error("O valor a ser depositado deve ser maior que zero!");
     }
     saldo += valor;
+    localStorage.setItem("saldo", saldo.toString()); // altera o dado no local storage
 }
 const Conta = {
     getSaldo() {
@@ -27,6 +29,24 @@ const Conta = {
     },
     getDataAcesso() {
         return new Date();
+    },
+    getGruposTransacoes() {
+        const gruposTransacoes = [];
+        const listaTransacoes = structuredClone(transacoes); // structuredClone() clona a lista para que não possa ser alterada a lista original
+        const transacoesOrdenandas = listaTransacoes.sort((t1, t2) => t2.data.getTime() - t1.data.getTime()); // ordenando atraves da comparação via sort
+        let labelAtualGrupoTransacao = "";
+        for (let transacao of transacoesOrdenandas) {
+            let labelGrupoTransacao = transacao.data.toLocaleDateString("pt-br", { month: "long", year: "numeric" });
+            if (labelAtualGrupoTransacao != labelGrupoTransacao) {
+                labelAtualGrupoTransacao = labelGrupoTransacao;
+                gruposTransacoes.push({
+                    label: labelGrupoTransacao,
+                    transacoes: [],
+                });
+            }
+            gruposTransacoes.at(-1).transacoes.push(transacao);
+        }
+        return gruposTransacoes;
     },
     registrarTransacao(novaTransacao) {
         if (novaTransacao.tipoTransacao == TipoTransacao.DEPOSITO) {
@@ -40,7 +60,7 @@ const Conta = {
             throw new Error("Tipo de Transação é inválido!");
         }
         transacoes.push(novaTransacao);
-        console.log(novaTransacao);
+        console.log(this.getGruposTransacoes());
         localStorage.setItem("transacoes", JSON.stringify(transacoes));
     },
 };
