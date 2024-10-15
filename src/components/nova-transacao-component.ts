@@ -1,3 +1,8 @@
+import { formartarMoeda } from "../utils/formatters.js";
+import { Transacao } from "../types/Transacao.js";
+import { TipoTransacao } from "../types/TipoTransacao.js";
+
+
 elementoFormulario.addEventListener("submit", function (event) {
   event.preventDefault();
 
