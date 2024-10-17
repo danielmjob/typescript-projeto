@@ -31,5 +31,6 @@ https://typescript-projeto-tokj.vercel.app/
 - Uso de metodos publicos, privados aumentando a segurança, criação de métodos estáticos em Ts
 - Uso de Generics <T> para criar componentes mais flexiveis e reutilizáveis
 - Aplicando Herança através de extends e usar super para chamar o construtor da classe "mãe" na classe filha
+- Uso de Decorator (funções executadas antes do método) aplicadas como validação
 
   feito no curso da Alura
