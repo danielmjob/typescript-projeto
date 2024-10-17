@@ -5,6 +5,7 @@ export class Armazenador {
         localStorage.setItem(chave, valorComoString);
     }
     // static permite chamar um metodo sem a necessidade de estanciar a classe
+    // <T> aplicação de Generics
     static obter(chave, reviver) {
         const valor = localStorage.getItem(chave);
         if (valor === null) {
