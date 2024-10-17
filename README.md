@@ -29,4 +29,5 @@ https://typescript-projeto-tokj.vercel.app/
 
 - Criando Objetos, construindo classes, definindo atributos e desenvolvendo métodos
 - Uso de metodos publicos, privados aumentando a segurança, criação de métodos estáticos em Ts
+- Uso de Generics <T> para criar componentes mais flexiveis e reutilizáveis 
   feito no curso da Alura
