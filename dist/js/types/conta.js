@@ -11,6 +11,9 @@ export class Conta {
     constructor(nome) {
         this.nome = nome;
     }
+    getTitular() {
+        return this.nome;
+    }
     getGruposTransacoes() {
         const gruposTransacoes = [];
         const listaTransacoes = structuredClone(this.transacoes); // structuredClone() clona a lista para que não possa ser alterada a lista original

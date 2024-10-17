@@ -3,9 +3,9 @@ import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js";
 
 export class Conta {
-  nome: string;
-  saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
-  transacoes: Transacao[] =
+  protected nome: string;
+  protected saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
+  private transacoes: Transacao[] =
     JSON.parse(
       localStorage.getItem("transacoes"),
       (key: string, value: any) => {
@@ -18,6 +18,10 @@ export class Conta {
 
   constructor(nome: string) {
     this.nome = nome;
+  }
+
+  public getTitular() {
+    return this.nome;
   }
 
   getGruposTransacoes(): GrupoTransacao[] {
