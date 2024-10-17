@@ -1,7 +1,7 @@
 import { formatarData } from "../utils/formatters.js";
 import { FormatoData } from "../types/FormatoData.js";
 import { formatarMoeda } from "../utils/formatters.js";
-import Conta from "../types/conta.js";
+import Conta from "../types/Conta.js";
 
 const elementoSaldo = document.querySelector(
   ".saldo-valor .valor"

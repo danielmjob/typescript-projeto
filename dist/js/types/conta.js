@@ -1,38 +1,19 @@
 import { TipoTransacao } from "./TipoTransacao.js";
-let saldo = JSON.parse(localStorage.getItem("saldo")) || 0; // PEGA O SALDO DO LOCAL STORAGE SE NÃO HOUVER SALDO ELE INICIA COM 0
-const transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
-    if (key === "data") {
-        return new Date(value);
+export class Conta {
+    nome;
+    saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
+    transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
+        if (key === "data") {
+            return new Date(value);
+        }
+        return value;
+    }) || [];
+    constructor(nome) {
+        this.nome = nome;
     }
-    return value;
-}) || []; // TRANSFORMA OS DADOS EM JSON - para guardar no Local Storage dentro de inspecionar é possivel ver
-function debitar(valor) {
-    if (valor <= 0) {
-        throw new Error("O valor a ser debitado deve ser maior que zero!");
-    }
-    if (valor > saldo) {
-        throw new Error("Saldo insuficiente!");
-    }
-    saldo -= valor;
-    localStorage.setItem("saldo", saldo.toString()); // altera o dado no local storage
-}
-function depositar(valor) {
-    if (valor <= 0) {
-        throw new Error("O valor a ser depositado deve ser maior que zero!");
-    }
-    saldo += valor;
-    localStorage.setItem("saldo", saldo.toString()); // altera o dado no local storage
-}
-const Conta = {
-    getSaldo() {
-        return saldo;
-    },
-    getDataAcesso() {
-        return new Date();
-    },
     getGruposTransacoes() {
         const gruposTransacoes = [];
-        const listaTransacoes = structuredClone(transacoes); // structuredClone() clona a lista para que não possa ser alterada a lista original
+        const listaTransacoes = structuredClone(this.transacoes); // structuredClone() clona a lista para que não possa ser alterada a lista original
         const transacoesOrdenandas = listaTransacoes.sort((t1, t2) => t2.data.getTime() - t1.data.getTime()); // ordenando atraves da comparação via sort
         let labelAtualGrupoTransacao = "";
         for (let transacao of transacoesOrdenandas) {
@@ -47,22 +28,46 @@ const Conta = {
             gruposTransacoes.at(-1).transacoes.push(transacao);
         }
         return gruposTransacoes;
-    },
+    }
+    getSaldo() {
+        return this.saldo;
+    }
+    getDataAcesso() {
+        return new Date();
+    }
     registrarTransacao(novaTransacao) {
         if (novaTransacao.tipoTransacao == TipoTransacao.DEPOSITO) {
-            depositar(novaTransacao.valor);
+            this.depositar(novaTransacao.valor);
         }
         else if (novaTransacao.tipoTransacao == TipoTransacao.TRANSFERENCIA ||
             novaTransacao.tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO) {
-            debitar(novaTransacao.valor);
+            this.debitar(novaTransacao.valor);
             novaTransacao.valor *= -1; // para mostrar como debito com negativo
         }
         else {
             throw new Error("Tipo de Transação é inválido!");
         }
-        transacoes.push(novaTransacao);
+        this.transacoes.push(novaTransacao);
         console.log(this.getGruposTransacoes());
-        localStorage.setItem("transacoes", JSON.stringify(transacoes));
-    },
-};
-export default Conta;
+        localStorage.setItem("transacoes", JSON.stringify(this.transacoes));
+    }
+    debitar(valor) {
+        if (valor <= 0) {
+            throw new Error("O valor a ser debitado deve ser maior que zero!");
+        }
+        if (valor > this.saldo) {
+            throw new Error("Saldo insuficiente!");
+        }
+        this.saldo -= valor;
+        localStorage.setItem("saldo", this.saldo.toString()); // altera o dado no local storage
+    }
+    depositar(valor) {
+        if (valor <= 0) {
+            throw new Error("O valor a ser depositado deve ser maior que zero!");
+        }
+        this.saldo += valor;
+        localStorage.setItem("saldo", this.saldo.toString()); // altera o dado no local storage
+    }
+}
+const conta = new Conta("Joana da Silva Oliveira");
+export default conta;
