@@ -24,4 +24,9 @@ https://typescript-projeto-tokj.vercel.app/
 - Correção da exibição de datas no front-end.
 - Implementação da lógica do Extrato seguindo o padrão dos outros componentes.
 
+> > Atualização!
+> > Aplicando Orientação a Objetos
+
+- Criando Objetos, construindo classes, definindo atributos e desenvolvendo métodos
+
 feito no curso da Alura
