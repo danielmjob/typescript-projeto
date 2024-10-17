@@ -28,5 +28,5 @@ https://typescript-projeto-tokj.vercel.app/
 > > Aplicando Orientação a Objetos
 
 - Criando Objetos, construindo classes, definindo atributos e desenvolvendo métodos
-
-feito no curso da Alura
+- Uso de metodos publicos, privados aumentando a segurança, criação de métodos estáticos em Ts
+  feito no curso da Alura
